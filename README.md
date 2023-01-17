@@ -60,7 +60,8 @@ Current solution was well tested using docker
 Due to short amount of time I wasn't able to automate and debug dependency configuration on Ubuntu VM. 
 
 1) First you need to install kubernetes server. I would suggest using `minikube`. Installation instructions are here https://minikube.sigs.k8s.io/docs/start/.
-2) Install docker. https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+2) Install docker. https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository. 
+__IMPORTANT__ Check this section: https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user
 3) Start minikube
 
 ```bash
@@ -76,9 +77,23 @@ eval $(minikube docker-env)
 ```
 
 4) Clone this repo
+```
+git clone https://github.com/baitcode/devops-test-redis-ha.git
+```
 
+5) Install Make and golang
+```
+sudo apt install -y make golang
+```
+
+5) Build docker image
+```
+cd devops-test-redis-ha/
+make builddocker
+```
 # Points to improve
 
 1) VM configuration scripts
 2) Integration tests
 3) Test that nodes connect back to cluster after going online
+4) Build binaries with docker

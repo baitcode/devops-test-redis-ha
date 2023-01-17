@@ -20,12 +20,14 @@ buildbinaries:
 	@(cd src && go get && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -gcflags "all=-N -l" -o ../build/counter ./main.go)
 
 builddocker: buildbinaries
-	docker build -f ./deployment/counter/docker/counter.Dockerfile ./build -t ${DOCKER_IMAGE_TAG}
+	docker build -f ./deployment/counter/docker/counter.Dockerfile ./build -t ${DOCKER_APP_IMAGE_TAG}
 
 push: builddocker
-	docker push -t ${DOCKER_IMAGE_TAG}
+	docker push -t ${DOCKER_APP_IMAGE_TAG}
 	docker push -t ${DOCKER_TWEMPROXY_IMAGE_TAG}
 
 refresh: builddocker
 	kubectl -n counter delete --all pods
 
+deploy: 
+	cd deployment/counter/terraform/local && terraform init && terraform apply
