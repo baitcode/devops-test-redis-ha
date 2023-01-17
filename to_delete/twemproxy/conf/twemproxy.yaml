@@ -1,0 +1,13 @@
+alpha:
+  listen: 0.0.0.0:${app_port}
+  hash: fnv1a_64
+  distribution: ketama
+  auto_eject_hosts: true
+  redis: true
+  server_retry_timeout: 2000
+  server_failure_limit: 1
+  servers:
+%{ for host in redis_hosts ~} 
+   - ${host}:1 
+%{ endfor ~}
+  
