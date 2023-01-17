@@ -50,10 +50,7 @@ Makefile is a main entrypoint for developer
 `make buildbinaries` - will produce go binary of the counter app and store it in `build` folder
 `make builddocker` - will call buildbinaries first then produce docker image tagged devops/counter
 `make refresh` - builds docker and restarts counter service. Used to quickly refresh code during local development
-
-# Developer flow
-
-Current solution was well tested using docker
+`make deploy` - runs `terrraform apply` in `local` folder. Deploys all changes to kubernetes cluster aliased as `minikube`
 
 # How to test solution on fresh Ubuntu
 
@@ -112,3 +109,12 @@ kubectl -n counter port-forward --address 0.0.0.0 services/counter 8080:8080
 4) Build binaries with docker
 5) Easy way to configure kubectl context name aliases
 6) Cloud ready solution
+7) Finish developer flow section
+
+# Developer flow
+
+Current solution was well tested using dockerapp
+If you have it installed then all you need for whole thing to work is create alias 
+for docker-desktop context with name "minikube". From that point make deploy should work. Well dependencies have to be installed:
+
+terraform and make 
