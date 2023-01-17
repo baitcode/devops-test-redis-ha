@@ -17,7 +17,7 @@ module "counter-app" {
     create_namespace = true
     namespace = "counter"
     application_name = "counter"
-    replica_number = 1
+    replica_count = 1
     
     counter_secrets_name = "counter-secrets"
     docker_repository = "devops/counter"

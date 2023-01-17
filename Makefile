@@ -29,5 +29,5 @@ push: builddocker
 refresh: builddocker
 	kubectl -n counter delete --all pods
 
-deploy: 
+deploy: builddocker
 	cd deployment/counter/terraform/local && terraform init && terraform apply
