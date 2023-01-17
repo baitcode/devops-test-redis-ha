@@ -65,10 +65,9 @@ __IMPORTANT__ Check this section: https://docs.docker.com/engine/install/linux-p
 3) Start minikube
 
 ```bash
-minikube start --driver=docker
+minikube start 
 # If you are using single core VM then add arguments:
 #   --extra-config=kubeadm.ignore-preflight-errors=NumCPU --force --cpus=1
-minikube update-context --profile docker-desktop
 ```
 
 3) Setup docker cli.
@@ -92,11 +91,17 @@ wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update && sudo apt install terraform
 ```
+7) Install kubectl. https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management
 
-5) Build docker and deploy
+8) Build docker and deploy
 ```
 cd devops-test-redis-ha/
 make deploy
+```
+
+9) Expose port.
+```
+kubectl -n counter port-forward --address 0.0.0.0 services/counter 8080:8080
 ```
 
 # Points to improve
@@ -105,3 +110,5 @@ make deploy
 2) Integration tests
 3) Test that nodes connect back to cluster after going online
 4) Build binaries with docker
+5) Easy way to configure kubectl context name aliases
+6) Cloud ready solution

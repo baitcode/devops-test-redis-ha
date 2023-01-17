@@ -9,14 +9,11 @@ terraform {
 
 provider "kubernetes" {
     config_path    = "~/.kube/config"
-    config_context = "docker-desktop"
+    config_context = "minikube"
 }
 
 module "counter-app" {
     source = "../_modules/counter-app"
-    create_namespace = true
-    namespace = "counter"
-    application_name = "counter"
     replica_count = 1
     
     counter_secrets_name = "counter-secrets"
@@ -30,6 +27,8 @@ module "counter-app" {
     redis_db = 0
     redis_host = "redis.redis.svc.cluster.local"
     redis_port = 6379
+
+    node_port = 30000
     
     providers = {
       kubernetes = kubernetes
@@ -38,20 +37,14 @@ module "counter-app" {
 
 module "redis" {
     source = "../_modules/redis"
-    create_namespace = true
-    namespace = "redis"
-    application_name = "redis"
+
     docker_repository = "redis"
     docker_version = "7-alpine"
+
     redis_secrets_name = "redis-secrets"
     volume_name = "redis-volume"
-    
-    redis_port = 6379
-    replicas_count  = 2
-    
-    sentinel_port   = 9000
-    sentinels_count = 3
-    
+    replicas_count  = 2    # redis replicas count (1 master is always present)
+    sentinels_count = 3    # redis sentinels count
 
     providers = {
       kubernetes = kubernetes

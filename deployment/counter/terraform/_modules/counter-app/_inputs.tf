@@ -54,3 +54,7 @@ variable "pull_policy" {
 variable "counter_secrets_name" {
   type = string
 }
+
+variable "node_port" {
+  type = number  
+}

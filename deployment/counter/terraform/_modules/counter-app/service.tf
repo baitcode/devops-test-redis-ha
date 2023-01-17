@@ -11,11 +11,12 @@ resource "kubernetes_service" "service" {
     }
 
     port {
+      node_port = var.node_port
       port = var.service_port
       target_port = var.app_port
       protocol = "TCP"
     }
 
-    type = "LoadBalancer"
+    type = "NodePort"
   } 
 }
